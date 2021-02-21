@@ -1,4 +1,4 @@
-# 01.mall
+# mogu-mall
 
 ## Project setup
 ```
