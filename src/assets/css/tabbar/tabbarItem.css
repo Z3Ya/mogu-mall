@@ -1,0 +1,8 @@
+.tabbar-item{
+  flex: 1;
+}
+/* 设置图片大小 */
+.tabbar-item img{
+  width: 24px;
+  height: 24px;
+}

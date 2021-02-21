@@ -1,0 +1,182 @@
+<!-- 详情页店铺信息的展示 -->
+<template>
+  <div class="shop-info">
+    <div class="shop-top">
+      <img :src="shop.logo" alt=""  @load="detailimgload"/>
+      <span>{{ shop.name }}</span>
+    </div>
+
+    <div class="shop-middle">
+      <div class="shop-left">
+        <div class="info-sells">
+          <div class="sells-count">{{ shop.sells | sellCountFilter }}</div>
+          <div class="sells-text">总销量</div>
+        </div>
+        <div class="info-goods">
+          <div class="goods-count">{{ shop.goodsCount }}</div>
+          <div class="goods-text">全部宝贝</div>
+        </div>
+        <!-- <span>{{ shop.fans }}</span> -->
+      </div>
+      <div class="shop-right">
+        <table>
+          <tr
+            v-for="(item, index) in shop.score"
+            :key="index"
+            class="{isBetter:item.isBetter}"
+          >
+            <td>{{ item.name }}</td>
+            <td class="score" :class="{ 'score-better': item.isBetter }">
+              {{ item.score }}
+            </td>
+            <td class="grade" :class="{ 'grade-better': item.isBetter }">
+              <span>
+                {{ item.isBetter ? "高" : "低" }}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="shop-bottom">
+      <div class="enter-shop">进店逛逛</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "detailShopInfo",
+  data() {
+    return {};
+  },
+
+  props: {
+    shop: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+
+  filters: {
+    sellCountFilter(message) {
+      if (message < 10000) return value;
+      return (message / 10000).toFixed(1) + "万";
+    },
+  },
+  components: {},
+
+  computed: {},
+
+  methods: {
+    detailimgload() {
+      this.$bus.$emit('detailimgload')
+    }
+  },
+
+  //生命周期 - 创建完成（访问当前this实例）
+  created() {},
+  //生命周期 - 挂载完成（访问DOM元素）
+  mounted() {},
+};
+</script>
+<style lang='css' scoped>
+/* @import url(); 引入css类 */
+.shop-info {
+  padding: 25px 8px;
+  border-bottom: 5px solid #f2f5f8;
+  
+}
+
+.shop-top {
+  line-height: 45px;
+  /* 让元素垂直中心对齐 */
+  display: flex;
+}
+
+.shop-top img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.shop-top span {
+  margin-left: 10px;
+}
+
+.shop-middle {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.shop-middle .shop-left {
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    color: #333;
+    text-align: center;
+    border-right: 1px solid rgba(0,0,0,.1);
+}
+
+.sells-count, .goods-count {
+    font-size: 18px;
+  }
+
+  .sells-text, .goods-text {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+.shop-middle .shop-right {
+    flex: 1;
+    display: flex;
+    justify-content:center;
+    font-size: 13px;
+    color: #333;
+}
+
+.shop-right table {
+  width: 120px;
+}
+
+.shop-right table td {
+  padding: 5px 0;
+}
+.shop-right .score {
+  color: #5ea732;
+  
+}
+ 
+.shop-right .score-better {
+  color: #f13e3a;
+}
+
+.shop-right .grade span{
+    background-color: #5ea732;
+    color: #fff;
+    text-align: center;
+  }
+
+.shop-right .grade-better span {
+    background-color: #f13e3a;
+  }
+
+.shop-bottom {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+.enter-shop {
+  display: inline-block;
+  font-size: 14px;
+  background-color: #f2f5f8;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 10px;
+}
+</style>
